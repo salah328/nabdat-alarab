@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شات غرف مطور</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #e5e5e5; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* شريط الرتب العلوي البنفسجي */
+        .header-bar { background-color: #631243; color: #fff; padding: 12px; display: flex; justify-content: space-around; align-items: center; font-weight: bold; font-size: 14px; border-bottom: 2px solid #4a0d32; }
+        .header-item { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .header-item.active { color: #ffd700; }
+
+        /* منطقة المحادثة المتتالية */
+        .chat-area { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; }
+        
+        /* سطر الرسالة الكامل */
+        .message-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; position: relative; }
+        
+        /* الصورة الشخصية مع إطار الرتبة الدائري */
+        .avatar-container { position: relative; width: 50px; height: 50px; flex-shrink: 0; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; background-color: #bbbbbb; border: 2px solid #ccc; object-fit: cover; }
+        
+        /* إطار رتبة كبار / أثرياء لامع */
+        .avatar-frame { position: absolute; top: -4px; left: -4px; width: 58px; height: 58px; border: 2px dashed #ffd700; border-radius: 50%; animation: rotateFrame 8s linear infinite; pointer-events: none; }
+        
+        @keyframes rotateFrame { 100% { transform: rotate(360deg); } }
+
+        /* محتوى العضو (الاسم والرسالة بالأسفل) */
+        .content-container { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; width: 100%; }
+        
+        /* صندوق الاسم الأسود العريض المخصص */
+        .name-box { background-color: #111111; color: #ffffff; padding: 6px 20px; border-radius: 15px; font-weight: bold; font-size: 13px; letter-spacing: 1px; display: inline-flex; align-items: center; justify-content: center; min-width: 140px; box-shadow: 0px 2px 4px rgba(0,0,0,0.3); border: 1px solid #333; }
+        
+        /* نص الرسالة والإيموجي بالأسفل خارج الصندوق تماماً */
+        .message-text { color: #333333; font-size: 14px; font-weight: 600; padding-right: 8px; display: flex; align-items: center; gap: 6px; }
+
+        /* شريط الكتابة السفلي */
+        .input-bar { background-color: #631243; padding: 10px; display: flex; align-items: center; gap: 10px; border-top: 1px solid #4a0d32; }
+        .input-field { flex: 1; background-color: #fff; border: none; padding: 10px 15px; border-radius: 20px; font-size: 14px; outline: none; }
+        .btn-send { background: none; border: none; color: white; font-size: 20px; cursor: pointer; transform: rotate(180deg); }
+        .user-name-input { width: 30%; background-color: #fff; border: none; padding: 8px; border-radius: 10px; font-size: 12px; outline: none; }
+    </style>
+</head>
+<body>
+
+    <!-- شريط الرتب العلوي -->
+    <div class="header-bar">
+        <div class="header-item active">👑 الأثرياء</div>
+        <div class="header-item">💎 الكبار</div>
+        <div class="header-item">🔔 غرف نبضات العرب</div>
+    </div>
+
+    <!-- ساحة الرسائل المتتالية -->
+    <div class="chat-area" id="chatArea">
+        <!-- الرسائل الفورية ستظهر هنا تلقائياً بتصميمها المخصص -->
+    </div>
+
+    <!-- شريط الكتابة السفلي المطور -->
+    <div class="input-bar">
+        <input type="text" id="usernameInput" class="user-name-input" placeholder="اسمك المزخرف...">
+        <input type="text" id="msgInput" class="input-field" placeholder="اكتب هنا...">
+        <button id="sendBtn" class="btn-send">➔</button>
+    </div>
+
+    <!-- ربط محرك تشغيل الرسائل الفوري -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const chatArea = document.getElementById('chatArea');
+        const usernameInput = document.getElementById('usernameInput');
+        const msgInput = document.getElementById('msgInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // وظيفة الإرسال عند الضغط على الزر
+        sendBtn.addEventListener('click', () => {
+            const name = usernameInput.value.trim() || 'زائر نبضات';
+            const msg = msgInput.value.trim();
+            if(msg) {
+                socket.emit('chatMessage', { name, msg });
+                msgInput.value = ''; // مسح خانة الكتابة بعد الإرسال
+            }
+        });
+
+        // استقبال الرسائل من السيرفر وعرضها بالتصميم المطلوب فوراً
+        socket.on('message', (data) => {
+            const html = `
+                <div class="message-row">
+                    <div class="avatar-container">
+                        <div class="avatar-frame"></div>
+                        <div class="avatar-img"></div>
+                    </div>
+                    <div class="content-container">
+                        <div class="name-box">${data.name}</div>
+                        <div class="message-text">${data.msg}</div>
+                    </div>
+                </div>`;
+            chatArea.innerHTML += html;
+            chatArea.scrollTop = chatArea.scrollHeight; // النزول التلقائي لآخر رسالة
+        });
+    </script>
+</body>
+</html>
