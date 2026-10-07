@@ -1,12 +1,15 @@
 {
-  "name": "nabdat-alarab-chat",
+  "name": "chat",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "Wilbertz first Socket IO app",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Wilbert Muza",
   "dependencies": {
-    "express": "^4.18.2",
-    "socket.io": "^4.7.2"
-  }
+    "express": "^4.16.3",
+    "socket.io": "^2.5.0"
+  },
+  "license": "ISC"
 }
