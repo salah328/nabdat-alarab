@@ -7,8 +7,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// تعديل المسار هنا ليقرأ من مجلد "عام" المتواجد في مستودعك بالملي
+// تم تصحيح المسار هنا ليقرأ مجلد public بالإنجليزية وبدون أي تعطيل برميجي
 app.use(express.static(path.join(__dirname, 'public')));
+
 const users = {};
 
 io.on('connection', (socket) => {
