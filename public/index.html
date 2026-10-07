@@ -2,71 +2,48 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شات العرب - التصميم الكودي الأصلي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>شات العرب - النسخة الكودية العملاقة الشاملة</title>
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: #f3f4f6; }
-
-        /* الشريط العلوي الأسود المخصص للمايكروفونات والصوت */
-        .top-audio-bar { background-color: #1a1a1a; color: white; height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .audio-mics { display: flex; gap: 12px; margin: 0 auto; }
-        .mic-slot { width: 32px; height: 32px; background-color: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 14px; cursor: pointer; border: 1px solid #444; }
-        .mic-slot.active { color: #22c55e; border-color: #22c55e; }
-
-        /* الهيكل الرئيسي الموزع (شاشة يسار + شريط يمين) */
-        .main-layout { display: flex; flex: 1; height: calc(100vh - 50px); overflow: hidden; }
-
-        /* منطقة الدردشة اليسارية الواجهة البيضاء */
-        .chat-section { flex: 1; display: flex; flex-direction: column; background-color: #ffffff; border-left: 1px solid #e5e7eb; }
-        .messages-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        
-        /* رسائل النظام الموضحة أسفل اليسار */
-        .sys-log { font-size: 13px; font-weight: bold; color: #6b7280; text-align: right; padding: 4px 10px; background: #f9fafb; border-right: 3px solid #9ca3af; margin-top: auto; }
-
-        /* صندوق إدخال الرسائل السفلي اليساري */
-        .input-section { height: 55px; border-top: 1px solid #e5e7eb; display: flex; align-items: center; padding: 0 15px; gap: 10px; background: #fff; }
-        .input-controls { display: flex; gap: 15px; color: #6b7280; font-size: 18px; }
-        .input-controls i { cursor: pointer; }
-        .chat-input { flex: 1; border: none; outline: none; font-size: 15px; text-align: right; padding: 10px; }
-        
-        /* الشريط الجانبي اليميني الكامل للمتواجدين والغرف */
-        .sidebar-section { width: 280px; background-color: #f9fafb; display: flex; flex-direction: column; flex-shrink: 0; }
-        
-        /* أزرار التبديل العلوية للغرف والأعضاء */
-        .sidebar-tabs { display: flex; justify-content: space-around; background-color: #f3f4f6; padding: 10px 0; border-bottom: 1px solid #e5e7eb; color: #4b5563; font-size: 16px; }
-        .sidebar-tabs i { cursor: pointer; }
-        .room-button { background-color: #e0f2fe; color: #0369a1; padding: 8px 15px; margin: 8px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 14px; cursor: pointer; }
-
-        /* نظام دوائر الحالات والقصص (الـ + الموضحة بصورتك) */
-        .story-mic-section { display: flex; gap: 10px; padding: 10px; overflow-x: auto; border-bottom: 1px solid #e5e7eb; }
-        .story-circle { width: 45px; height: 45px; border-radius: 50%; border: 2px dashed #d1d5db; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 18px; cursor: pointer; flex-shrink: 0; }
-        .story-circle.user { border-style: solid; border-color: #7b164a; padding: 2px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: #f3f4f6; position: relative; }
+        .top-audio-bar { background-color: #1a1a1a; color: white; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); z-index: 10; width: 100%; }
+        .audio-mics { display: flex; gap: 10px; margin: 0 auto; align-items: center; }
+        .mic-slot { width: 38px; height: 38px; background-color: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 16px; cursor: pointer; border: 2px solid #444; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+        .mic-slot.active { color: #22c55e; border-color: #22c55e; background-color: #222; }
+        .main-layout { display: flex; flex: 1; height: calc(100vh - 60px); overflow: hidden; width: 100%; position: relative; }
+        .sidebar-section { width: 100%; max-width: 260px; background-color: #f9fafb; display: flex; flex-direction: column; border-left: 2px solid #e5e7eb; flex-shrink: 0; z-index: 5; }
+        .sidebar-tabs { display: flex; justify-content: space-around; background-color: #7b164a; padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: white; font-size: 18px; }
+        .room-button { background-color: #e0f2fe; color: #0369a1; padding: 10px; margin: 10px; border-radius: 8px; text-align: center; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .story-mic-section { display: flex; gap: 12px; padding: 10px 15px; overflow-x: auto; border-bottom: 1px solid #e5e7eb; background: #fff; }
+        .story-circle { width: 48px; height: 48px; border-radius: 50%; border: 2px dashed #9ca3af; display: flex; align-items: center; justify-content: center; color: #7b164a; font-size: 20px; cursor: pointer; flex-shrink: 0; }
+        .story-circle.user { border-style: solid; border-color: #22c55e; padding: 2px; }
         .story-circle img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-
-        /* قائمة المتواجدين حسب الرتب بالملي */
-        .user-list-container { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-        .user-list-group { font-size: 12px; font-weight: bold; color: #9ca3af; margin-top: 5px; margin-bottom: 2px; text-align: right; }
-        
-        .user-row { display: flex; align-items: center; justify-content: space-between; padding: 8px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-        .user-row:hover, .user-row.selected { background-color: #f0fdf4; border: 1px solid #bbf7d0; }
-        
-        .user-info-right { display: flex; align-items: center; gap: 8px; }
-        .user-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
-        .user-name { font-size: 14px; font-weight: bold; color: #1f2937; }
-        
-        /* أيقونات الرتب الدقيقة (تاج admin ودرع System) */
-        .badge-admin { color: #eab308; font-size: 13px; }
-        .badge-system { color: #3b82f6; font-size: 13px; }
-        .status-dot-active { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; }
+        .user-list-container { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+        .user-list-group { font-size: 13px; font-weight: bold; color: #6b7280; margin-top: 8px; margin-bottom: 4px; text-align: right; border-bottom: 1px dashed #e5e7eb; padding-bottom: 2px; }
+        .user-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.02); cursor: pointer; }
+        .user-row.selected { background-color: #f0fdf4; border-color: #bbf7d0; box-shadow: 0 2px 5px rgba(34,197,94,0.1); }
+        .user-info-right { display: flex; align-items: center; gap: 10px; }
+        .user-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
+        .user-name { font-size: 15px; font-weight: bold; }
+        .badge-admin { color: #eab308; font-size: 14px; }
+        .badge-system { color: #3b82f6; font-size: 14px; }
+        .status-dot-active { width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; border: 1px solid #fff; }
+        .chat-section { flex: 1; display: flex; flex-direction: column; background-color: #ffffff; width: 100%; }
+        .messages-container { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .sys-log { font-size: 14px; font-weight: bold; color: #4b5563; text-align: right; padding: 8px 12px; background: #f9fafb; border-right: 4px solid #7b164a; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%; word-break: break-word; }
+        .system-text { color: #b91c1c; font-weight: bold; font-size: 14px; background: #fee2e2; padding: 8px 14px; border-radius: 8px; border-right: 5px solid #b91c1c; display: inline-block; width: 100%; text-align: right; }
+        .system-link { color: #2563eb; text-decoration: underline; cursor: pointer; margin-right: 5px; font-weight: bold; }
+        .input-section { height: 60px; border-top: 1px solid #e5e7eb; display: flex; align-items: center; padding: 0 15px; gap: 12px; background: #fff; box-shadow: 0 -2px 5px rgba(0,0,0,0.05); }
+        .input-controls { display: flex; gap: 15px; color: #6b7280; font-size: 22px; align-items: center; }
+        .chat-input { flex: 1; border: none; outline: none; font-size: 16px; text-align: right; padding: 10px; background: #f9fafb; border-radius: 20px; border: 1px solid #e5e7eb; }
+        .send-btn { width: 44px; height: 44px; background-color: #111827; color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; transform: scaleX(-1); flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
-
-    <!-- 1. الشريط العلوي الأسود للمايكات -->
     <div class="top-audio-bar">
-        <div><i class="fa-solid fa-bars" style="cursor:pointer;"></i></div>
+        <div><i class="fa-solid fa-bars" style="cursor:pointer; font-size: 20px;"></i></div>
         <div class="audio-mics">
             <div class="mic-slot active"><i class="fa-solid fa-microphone"></i></div>
             <div class="mic-slot"><i class="fa-solid fa-microphone-slash"></i></div>
@@ -74,103 +51,65 @@
             <div class="mic-slot"><i class="fa-solid fa-microphone-slash"></i></div>
             <div class="mic-slot"><i class="fa-solid fa-microphone-slash"></i></div>
         </div>
-        <div><i class="fa-solid fa-gear" style="cursor:pointer;"></i></div>
+        <div><i class="fa-solid fa-gear" style="cursor:pointer; font-size: 20px;"></i></div>
     </div>
-
-    <!-- الهيكل الرئيسي الموزع -->
     <div class="main-layout">
-        
-        <!-- 2. منطقة الدردشة اليسارية (الشاشة البيضاء) -->
-        <div class="chat-section">
-            <div class="messages-container" id="chatArea">
-                <div class="sys-log" style="margin-top: auto;">🤖 نظام الحماية: أهلاً بك في السيرفر المطور.</div>
-                <div class="sys-log">👑 الإدارة: تم تثبيت ملفات الشات الكودي المفرزة بنجاح.</div>
-            </div>
-            
-            <!-- صندوق الكتابة السفلي -->
-            <div class="input-section">
-                <div class="input-controls">
-                    <i class="fa-solid fa-paper-plane" id="sendBtn" style="color:#7b164a;"></i>
-                    <i class="fa-regular fa-face-smile"></i>
-                    <i class="fa-solid fa-pencil"></i>
-                </div>
-                <input type="text" id="messageInput" class="chat-input" placeholder="اكتب رسالتك هنا...">
-            </div>
-        </div>
-
-        <!-- 3. الشريط الجانبي اليميني (غرف + متواجدين) -->
         <div class="sidebar-section">
-            <div class="sidebar-tabs">
-                <i class="fa-solid fa-user-group"></i>
-                <i class="fa-solid fa-comments"></i>
-                <i class="fa-solid fa-star"></i>
-            </div>
-            
+            <div class="sidebar-tabs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-comments"></i><i class="fa-solid fa-user-group"></i></div>
             <div class="room-button"><i class="fa-solid fa-door-open"></i> غرفة العام الرئيسية</div>
-
-            <!-- مقاعد المتواجدين الدائرية -->
             <div class="story-mic-section">
                 <div class="story-circle"><i class="fa-solid fa-plus"></i></div>
                 <div class="story-circle user"><img src="https://placeholder.com"></div>
-                <div class="story-circle"><i class="fa-solid fa-microphone-slash"></i></div>
             </div>
-
-            <!-- قائمة الأسماء المفرزة بالرتب والأيقونات الحقيقية -->
             <div class="user-list-container">
                 <div class="user-list-group">👑 طاقم الإدارة</div>
-                
                 <div class="user-row">
                     <div class="status-dot-active"></div>
-                    <div class="user-info-right">
-                        <span class="user-name" style="color:#eab308;">admin</span>
-                        <i class="fa-solid fa-crown badge-admin"></i>
-                        <img src="https://placeholder.com" class="user-avatar">
-                    </div>
+                    <div class="user-info-right"><span class="user-name" style="color:#eab308;">admin</span><i class="fa-solid fa-crown badge-admin"></i><img src="https://placeholder.com" class="user-avatar"></div>
                 </div>
-
                 <div class="user-list-group">🛡️ الأنظمة الآلية</div>
-                
                 <div class="user-row selected">
                     <div class="status-dot-active"></div>
-                    <div class="user-info-right">
-                        <span class="user-name" style="color:#3b82f6;">System</span>
-                        <i class="fa-solid fa-shield-halved badge-system"></i>
-                        <img src="https://placeholder.com" class="user-avatar">
-                    </div>
+                    <div class="user-info-right"><span class="user-name" style="color:#3b82f6;">System</span><i class="fa-solid fa-shield-halved badge-system"></i><img src="https://placeholder.com" class="user-avatar"></div>
                 </div>
+                <div class="user-list-group">👤 الزوار المتصلون</div>
+                <div id="dynamicUsers"></div>
             </div>
         </div>
-
+        <div class="chat-section">
+            <div class="messages-container" id="chatArea">
+                <div class="sys-log" style="margin-top: auto;">🤖 نظام الحماية: أهلاً بك في السيرفر المطور الموزع بالملي.</div>
+                <div class="sys-log"><span class="system-text">🤖 المراقب الآلي: تم ضبط وتوسيع واجهة الجوال بالملي.</span></div>
+            </div>
+            <div class="input-section">
+                <div class="input-controls"><i class="fa-regular fa-face-smile"></i></div>
+                <input type="text" id="messageInput" class="chat-input" placeholder="اكتب رسالتك العامة هنا...">
+                <button class="send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
     </div>
-
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
         const chatArea = document.getElementById('chatArea');
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
-
-        const userName = prompt("أدخل اسمك المستعار للدخول إلى الشات الكودي:") || "زائر_" + Math.floor(Math.random() * 100);
-        socket.emit('registerUser', { name: userName, rank: 'زائر', style: 'black' });
-
+        const dynamicUsers = document.getElementById('dynamicUsers');
+        const userName = prompt("أدخل اسمك المستعار للدخول:") || "زائر_" + Math.floor(Math.random() * 100);
+        socket.emit('registerUser', { name: userName, rank: 'زائر', color: '#1f2937' });
+        socket.on('updateUserList', (users) => {
+            dynamicUsers.innerHTML = '';
+            Object.values(users).forEach(u => {
+                if (u.id !== socket.id) {
+                    const row = document.createElement('div');
+                    row.className = 'user-row';
+                    row.innerHTML = `<div class="status-dot-active"></div><div class="user-info-right"><span class="user-name" style="color:${u.color}">${u.name}</span><img src="https://placeholder.com" class="user-avatar"></div>`;
+                    dynamicUsers.appendChild(row);
+                }
+            });
+        });
         socket.on('receiveMessage', (data) => {
             const msgLog = document.createElement('div');
             msgLog.className = 'sys-log';
             msgLog.innerHTML = `<b>${data.user}:</b> ${data.text}`;
             chatArea.appendChild(msgLog);
-            chatArea.scrollTop = chatArea.scrollHeight;
-        });
-
-        function sendMessage() {
-            const text = messageInput.value.trim();
-            if(text) {
-                socket.emit('sendMessage', { text: text });
-                messageInput.value = '';
-            }
-        }
-
-        sendBtn.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
-    </script>
-</body>
-</html>
